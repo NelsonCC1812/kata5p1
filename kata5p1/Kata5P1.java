@@ -1,6 +1,7 @@
 package kata5p1;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -51,5 +52,21 @@ public class Kata5P1 {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+        // version 3 query
+
+        Iterable<String> fl = new EmailLoader(new FileLoader(new File("email.txt"))).items();
+
+        try (Connection conn = DriverManager.getConnection(url); Statement stmt = conn.createStatement()) {
+
+            for (String mail : fl)
+                stmt.execute(String.format("insert into email ('Mail') values ('%s');", mail));
+
+            System.out.println("Emails introducidos");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 }
