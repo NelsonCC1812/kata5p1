@@ -33,5 +33,23 @@ public class Kata5P1 {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+        // email query
+
+        url = "jdbc:sqlite:email.db";
+        sql = "create table if not exists email (" +
+                "'Id' integer primary key autoincrement," +
+                "'Mail' text not null);";
+
+        try (
+                Connection conn = DriverManager.getConnection(url);
+                Statement stmt = conn.createStatement()) {
+
+            stmt.execute(sql);
+            System.out.println("DB creada (si no existia previamente)");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
